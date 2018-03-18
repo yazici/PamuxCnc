@@ -1,0 +1,22 @@
+
+Welding
+
+I assume you are checking square by the diagonal measurement?
+
+ Distance from top left corner to bottom right corner is identical to measurement from top right corner to bottom left corner (at least relatively close as 1/16" or less difference).
+
+If you redo the frames, lay out material on a relatively flat work surface, use 1/4" steel tabs between the work surface and material for frame 
+at all 4 corners and every 12"-20" along the tubing between each set of corners. 
+
+This will help get the frame flat. Clamp at least 2 corners at a time-preferably all 4 corners if possible, 
+tack along the top of each corner, check square and flat after each weld.
+ Check square by measuring diagonal as above and check flat by left to right and diagonally trying to rock the frame on the tabs. Do not remove clamps the tubing until 
+ the welds cool. If you need to redo, cut the tacks. 
+ When re-tacking you may want to tack weld the inside corners. These tacks will be more secure and harder to cut out if necessary. 
+ A square flat frame sounds simple and can be a pain in the assz!!! 
+ 
+ BE SURE TO TACK OPPOSITE CORNERS TO ALLOW FOR EVEN HEATING, COOLING, AND METAL DRAWING.
+ WELD THE SAME WAY.
+ I tack and weld the top first, inside corners second, back side last. Don't forget to clamp. Stop often and check for square and flat.
+
+I PROMISE THIS PROCEDURE WORKS. I have welded many a square and flat frame that must fit within 1/32"" left to right and slide 12' in a saw gantry without rocking.

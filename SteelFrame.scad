@@ -1,11 +1,10 @@
-$fn=30;
-littleLonger = 0.01;
+
 
 // http://www.onlinemetals.com/merchant.cfm?pid=22487&step=4&showunits=inches&id=1646&top_cat=197
 // 1018 MILD STEEL SQUARE TUBE (METRIC SIZE) 40MM X 3MM WALL 60" LONG
 
-//steelTubeSizeX = 40;
-//steelTubeSizeY = 40;
+//steelTubeSizeNarrow = 40;
+//steelTubeSizeWide = 40;
 //steelTubeWallThickness = 3;
 //steelTubeCornerRadius = 0.25 * 25.4;
 
@@ -13,52 +12,76 @@ littleLonger = 0.01;
 
 
 
-steelTubeSizeX = (1+1/2) * 25.4;   // 38.1 mm
-steelTubeSizeY = (1+1/2) * 25.4;   // 38.1 mm
-steelTubeWallThickness = 0.12 * 25.4; // 3.048mm
-//steelTubeWallThickness = 0.1875 * 25.4; // 4.7625
 
-steelTubeCornerRadius = 0.25 * 25.4;
-
-//steelTubeSizeX = 1; 
-//steelTubeSizeY = 2; 
+//steelTubeSizeNarrow = 1; 
+//steelTubeSizeWide = 2; 
 //steelTubeWallThickness = 0.2;
 //steelTubeCornerRadius = 0.1;
 
 
-module miterCutTriangle(sizeX, sizeY, height)
+function steelTubeFaceWidth(whichFaceUp) = whichFaceUp == WIDE_FACE_UP ? steelTubeSizeWide : steelTubeSizeNarrow;
+function steelTubeDepth(whichFaceUp) = whichFaceUp == NARROW_FACE_UP ? steelTubeSizeWide : steelTubeSizeNarrow;
+
+
+module miterCutTriangle(tubeFaceWidth, tubeDepth, height)
 {
-    cornerRadius = 0.001;
     hull()
     {
-        translate([cornerRadius-littleLonger,cornerRadius-littleLonger,0]) {
-            cylinder(r = cornerRadius, h = height);
+	
+		cylinder(r = EPSILON, h = height);
+        
+        
+		translate([tubeFaceWidth, 0, 0])
+		{
+            cylinder(r = EPSILON, h = height);
         }
         
-        
-         translate([sizeX-cornerRadius+littleLonger, cornerRadius-littleLonger, 0]) {
-            cylinder(r = cornerRadius, h = height);
-        }
-        
-         translate([cornerRadius-littleLonger, sizeY-cornerRadius+littleLonger, 0]) {
-            cylinder(r = cornerRadius, h = height);
+		translate([0, tubeDepth, 0])
+		{
+            cylinder(r = EPSILON, h = height);
         }
     }
 }
 
 
-module rightTriangle(sizeX, sizeY, height)
+module rectangularPrism(width, length, height)
+{
+    hull()
+    {
+	
+		cylinder(r = EPSILON, h = height);
+        
+        
+		translate([0, length, 0])
+		{
+            cylinder(r = EPSILON, h = height);
+        }
+        
+		translate([width, length, 0])
+		{
+            cylinder(r = EPSILON, h = height);
+        }
+		
+		translate([width, 0, 0])
+		{
+            cylinder(r = EPSILON, h = height);
+        }
+    }
+}
+
+
+module rightTriangle(tubeFaceWidth, tubeDepth, height)
 {
     polyhedron(
-               points=[[0,0,0], [sizeX, 0, 0], [0, sizeY, 0], 
-                       [0,0,height], [sizeX, 0, height], [0, sizeY, height]],
+               points=[[0,0,0], [tubeFaceWidth, 0, 0], [0, tubeDepth, 0], 
+                       [0,0,height], [tubeFaceWidth, 0, height], [0, tubeDepth, height]],
     // Clockwise, lookiong from outside inwards
                faces=[[2,1,0],[5,3,4],[2, 5, 4, 1], [5,2,0,3], [1,4,3,0]]
                );
     
 }
 
-module roundedSquareRod(sizeX, sizeY, length, cornerRadius)
+module roundedSquareRod(tubeFaceWidth, tubeDepth, length, cornerRadius)
 {
     color(Steel) { 
       hull()
@@ -68,127 +91,143 @@ module roundedSquareRod(sizeX, sizeY, length, cornerRadius)
           }
           
           
-           translate([cornerRadius, sizeY - cornerRadius, 0]) {
+           translate([cornerRadius, tubeDepth - cornerRadius, 0]) {
               cylinder(r = cornerRadius, h = length);
           }
           
-           translate([sizeX-cornerRadius, sizeY-cornerRadius, 0]) {
+           translate([tubeFaceWidth-cornerRadius, tubeDepth-cornerRadius, 0]) {
               cylinder(r = cornerRadius, h = length);
           }
           
-           translate([sizeX-cornerRadius, cornerRadius, 0]) {
+           translate([tubeFaceWidth-cornerRadius, cornerRadius, 0]) {
               cylinder(r = cornerRadius, h = length);
           }
       }
     }
 }
 
-module roundedSquareTube(sizeX, sizeY, length, cornerRadius, wallThickness)
+module roundedSquareTube(tubeFaceWidth, tubeDepth, length, cornerRadius, wallThickness)
 {
     difference() {
-        roundedSquareRod(sizeX, sizeY, length, cornerRadius);
-        translate([wallThickness,wallThickness,-littleLonger/2]) {
-            roundedSquareRod(sizeX-wallThickness*2, sizeY-wallThickness*2, length+littleLonger, cornerRadius/2);
+        roundedSquareRod(tubeFaceWidth, tubeDepth, length, cornerRadius);
+        translate([wallThickness,wallThickness,-EPSILON/2]) {
+            roundedSquareRod(tubeFaceWidth-wallThickness*2, tubeDepth-wallThickness*2, length+EPSILON, cornerRadius/2);
         }
     }
 }
 
-module bottomMiterCut(sizeX, sizeY)
+module bottomMiterCut(tubeFaceWidth, tubeDepth)
 {
 
-  translate(v=[0,sizeY,0]) 
+  translate(v=[0,tubeDepth,0]) 
   {
-    rotate(a = 90, v=[1,0,0])
+    CCWx()
     {
 
-      miterCutTriangle(min(sizeX, sizeY), min(sizeX, sizeY), height = sizeY);
+      miterCutTriangle(tubeFaceWidth, tubeFaceWidth, height = tubeDepth);
     }
   }
 }
 
-module topMiterCut(sizeX, sizeY, length)
+module topMiterCut(tubeFaceWidth, tubeDepth, length)
 {
   translate(v=[0,0,length]) 
   {
-    rotate(a = -90, v=[1,0,0])
+    CWx()
     {
-      miterCutTriangle(min(sizeX, sizeY), min(sizeX, sizeY), height = sizeY);
+      miterCutTriangle(tubeFaceWidth, tubeFaceWidth, height = tubeDepth);
     }
   }
 }
 
-module miteredRoundedSquareTube(sizeX, sizeY, length, cornerRadius, wallThickness)
+module miteredRoundedSquareTube(tubeFaceWidth, tubeDepth, length, cornerRadius, wallThickness)
 {
     
     difference()
     {
         difference()
         {
-            roundedSquareTube(sizeX, sizeY, length, cornerRadius, wallThickness);
-            bottomMiterCut(sizeX, sizeY);
+            roundedSquareTube(tubeFaceWidth, tubeDepth, length, cornerRadius, wallThickness);
+            bottomMiterCut(tubeFaceWidth, tubeDepth);
         }
-        topMiterCut(sizeX, sizeY, length);
+        topMiterCut(tubeFaceWidth, tubeDepth, length);
     }    
 }
 
-module frameBottomTube(frameSizeX, frameSizeY)
+module frameBottomTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth)
 { 
-    translate(v=[0, steelTubeSizeX, steelTubeSizeY]) {
-        rotate(a = -90, v = [1,0,0]) {
-        rotate(a = 90, v = [0,1,0]) {
-            miteredRoundedSquareTube(steelTubeSizeX, steelTubeSizeY, frameSizeX, steelTubeCornerRadius, steelTubeWallThickness); 
-        }
-    }
+    translate(v=[0, tubeFaceWidth, tubeDepth])
+	{
+        CWx() 
+			CCWy()		
+				miteredRoundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeX, steelTubeCornerRadius, steelTubeWallThickness); 
+        
     }
 }
 
-module frameTopTube(frameSizeX, frameSizeY)
+module frameTopTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth)
 { 
-    translate(v=[0, frameSizeY-steelTubeSizeX, 0]) {
-        rotate(a = 90, v = [1,0,0]) {
-        rotate(a = 90, v = [0,1,0]) {
-            miteredRoundedSquareTube(steelTubeSizeX, steelTubeSizeY, frameSizeX, steelTubeCornerRadius, steelTubeWallThickness); 
-        }
-    }
+    translate(v=[0, frameSizeY-tubeFaceWidth, 0])
+	{
+		CCWx() 
+			CCWy()
+				miteredRoundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeX, steelTubeCornerRadius, steelTubeWallThickness); 
     }
 }
 
 
-module frameLeftTube(frameSizeX, frameSizeY) 
-{ 
-    translate(v=[steelTubeSizeX, 0, 0])
+module frameLeftTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth) 
+{
+    translate(v=[tubeFaceWidth, 0, 0])
     {
-        rotate(a = 180, v = [0, 1,0]) {
-            rotate(a = -90, v = [1,0,0])
-            {
-                miteredRoundedSquareTube(steelTubeSizeX, steelTubeSizeY, frameSizeY, steelTubeCornerRadius, steelTubeWallThickness); 
-            }
-        }
+        FLIPy()
+			CWx()
+				miteredRoundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeY, steelTubeCornerRadius, steelTubeWallThickness); 
+            
     }
 }
-module frameRightTube(frameSizeX, frameSizeY) 
+module frameRightTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth) 
 { 
-    translate(v=[frameSizeX-steelTubeSizeX, 0, steelTubeSizeY])
+    translate(v=[frameSizeX-tubeFaceWidth, 0, tubeDepth])
     {
-        rotate(a = -90, v = [1,0,0])
-        {
-            miteredRoundedSquareTube(steelTubeSizeX, steelTubeSizeY, frameSizeY, steelTubeCornerRadius, steelTubeWallThickness); 
-        }
+        CWx()
+            miteredRoundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeY, steelTubeCornerRadius, steelTubeWallThickness); 
+       
     }
 }
 
-module steelFrame(frameSizeX, frameSizeY) {
+
+// Only these functions use whichFaceUp
+
+module steelFrame(frameSizeX, frameSizeY, whichFaceUp) {
+
+	tubeFaceWidth = steelTubeFaceWidth(whichFaceUp);
+	tubeDepth = steelTubeDepth(whichFaceUp);
+    union() {
+        frameLeftTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth);
+        
+        frameRightTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth);
+    }
 
     union() {
-        frameLeftTube(frameSizeX, frameSizeY);
+        frameBottomTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth);
         
-        frameRightTube(frameSizeX, frameSizeY);
+        frameTopTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth);
     }
+}
 
-    union() {
-        frameBottomTube(frameSizeX, frameSizeY);
-        
-        frameTopTube(frameSizeX, frameSizeY);
+module horizontalBeam(frameSizeX, whichFaceUp, yPosition)
+{
+	tubeFaceWidth = steelTubeFaceWidth(whichFaceUp);
+	tubeDepth = steelTubeDepth(whichFaceUp);
+	
+	translate(v = [tubeFaceWidth,
+					yPosition,
+					0]) 
+	{
+		CCWy()
+			CCWz()
+				roundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeX - tubeFaceWidth*2, steelTubeCornerRadius, steelTubeWallThickness);
     }
 }
 
