@@ -88,26 +88,29 @@ module shaftSupport(length)
 }
 
 
-module mountingPlate(pos)
+module mountingPlate(colorScheme, pos)
 {
-	color("yellow")
+	Color(colorScheme, "mountingPlate")
 		translate(v = [-linearBearingWidth/2, -shaftBottomToLinearBearingVerticalDistance, pos -openLinearBearingGap/2] ) 
 			CCWx()
 				rectangularPrism(linearBearingWidth, linearBearingWidth + openLinearBearingGap, linearBearingPlateThickness);
 }
 
-module supportedShaft(color, length, pos)
+module supportedShaft(colorScheme, length, pos)
 {
 	union () {
-		color (color) sbr20(length);
+		Color (colorScheme, "shaft") 
+			sbr20(length);
 		
 		translate(v = [0, -shaftSupportHeight, pos - openLinearBearingGap/2] ) 
+		Color (colorScheme, "linearBearing") 
 			openLinearBearing();
 			
 		translate(v = [0, -shaftSupportHeight, pos + openLinearBearingGap/2] ) 
+		Color (colorScheme, "linearBearing")
 			openLinearBearing();
 		
-		mountingPlate(pos);
+		mountingPlate(colorScheme, pos);
 	}
 	
 }

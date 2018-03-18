@@ -20,41 +20,41 @@ module motorFrame()
 }
 
 
-module zLinearMotion(color)
+module zLinearMotion(colorScheme)
 {
     translate(v = [steelTubeSizeNarrow/2, -zAxisMotorShaftHeight, -travelZ] ) 
     {
-        supportedShaft(color, travelZ, zPos);
+        supportedShaft(colorScheme, travelZ, zPos);
     }
     
     translate(v = [zAxisWidth-steelTubeSizeNarrow/2, -zAxisMotorShaftHeight, -travelZ] ) 
     {
-        supportedShaft(color, travelZ, zPos);
+        supportedShaft(colorScheme, travelZ, zPos);
     }
     
     translate(v = [zAxisWidth/2,  -2*zAxisMotorShaftHeight, -travelZ+steelTubeSizeWide/2] ) 
     {
         
-		ballscrewSTL(color, travelZ);
+		ballscrew(colorScheme, travelZ);
 		translate(v = [0, 0, zPos]) 
 		{
 			ballnutSTL();		
 			ballnutHousingSTL();
 		}
-		floatingBallscrewSupportSTL(travelZ);
-		fixedBallscrewSupportSTL();
+		floatingBallscrewSupport(colorScheme, travelZ);
+		fixedBallscrewSupport(colorScheme);
 		shaftCouplerSTL();
     }
 }
 
 
 
-module zAxis(color)
+module zAxis()
 {
     motorFrame();
     translate(v = motorFrameOrigin ) 
     {
-		zLinearMotion(color);
+		zLinearMotion(getColorScheme("zAxis"));
 	
     }
 }

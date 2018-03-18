@@ -5,7 +5,6 @@ gantryFrameHeight = travelZ;
 
 gantryFrameOrigin = [0, yPos, baseFrameHeight + shaftHeight + openLinearBearingHeight/2];
 
-
 module gantryFrame()
 {
     translate(v = gantryFrameOrigin + [0, 0, steelTubeSizeNarrow])
@@ -23,20 +22,20 @@ module gantryFrame()
 }
 
 
-module xLinearMotion(color)
+module xLinearMotion(colorScheme)
 {
-
+	
 	shaftDistance = gantryFrameHeight/2;
     
 	translate(v = [0, 0, steelTubeSizeNarrow] ) 
     {
-        supportedShaft(color, travelX, xPos);
+        supportedShaft(colorScheme, travelX, xPos);
     }
 	
 	CCWz()
 		translate(v = [shaftDistance, -steelTubeSizeNarrow/2, steelTubeSizeNarrow] ) 
 		{
-			supportedShaft(color, travelX, xPos);
+			supportedShaft(colorScheme, travelX, xPos);
 		}
    
    
@@ -44,7 +43,7 @@ module xLinearMotion(color)
 		translate(v = [shaftDistance/2, -steelTubeSizeNarrow*3/2, steelTubeSizeNarrow] ) 
     {
         
-		ballscrewSTL(color, travelX);
+		ballscrew(colorScheme, travelX);
 		
 		
 		translate(v = [0, 0, xPos]) 
@@ -53,14 +52,14 @@ module xLinearMotion(color)
 			ballnutHousingSTL();
 		}
 		
-		floatingBallscrewSupportSTL(travelX);
-		fixedBallscrewSupportSTL();
+		floatingBallscrewSupport(colorScheme, travelX);
+		fixedBallscrewSupport(colorScheme);
 		shaftCouplerSTL();
 		
     }
 }
 
-module xAxis(color)
+module xAxis()
 {
     gantryFrame();
     
@@ -69,7 +68,7 @@ module xAxis(color)
 		
 		CWx()
 			CCWy()
-				xLinearMotion(color);
+				xLinearMotion(getColorScheme("xAxis"));
             
     }
 	

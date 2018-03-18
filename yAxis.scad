@@ -13,36 +13,37 @@ module baseFrame()
 }
 
 
-module yLinearMotion(color)
+module yLinearMotion(colorScheme)
 {
+	
     translate(v = [steelTubeSizeWide/2, -baseFrameHeight, steelTubeSizeNarrow] ) 
     {
-        supportedShaft(color, travelY, yPos);
+        supportedShaft(colorScheme, travelY, yPos);
     }
 
-	translate(v = [steelTubeSizeWide/2, -(baseFrameHeight + yAxisMotorShaftHeight), steelTubeSizeNarrow] ) 
+	translate(v = [steelTubeSizeWide/2, -(baseFrameHeight - yAxisMotorShaftHeight), steelTubeSizeNarrow] ) 
     {
         
-		ballscrewSTL(color, travelY);
+		ballscrew(colorScheme, travelY);
 		translate(v = [0, 0, yPos]) 
 		{
 			ballnutSTL();
 			ballnutHousingSTL();
 		}
-		floatingBallscrewSupportSTL(travelY);
-		fixedBallscrewSupportSTL();
+		floatingBallscrewSupport(colorScheme, travelY);
+		fixedBallscrewSupport(colorScheme);
 		shaftCouplerSTL();
     }
     
     translate(v = [tableSizeX-steelTubeSizeWide/2, -(baseFrameHeight), steelTubeSizeNarrow] ) 
     {
-        supportedShaft(color, travelY, yPos);
+        supportedShaft(colorScheme, travelY, yPos);
     }
     
-    translate(v = [tableSizeX-steelTubeSizeWide/2, -(baseFrameHeight + yAxisMotorShaftHeight), steelTubeSizeNarrow] ) 
+    translate(v = [tableSizeX-steelTubeSizeWide/2, -(baseFrameHeight - yAxisMotorShaftHeight), steelTubeSizeNarrow] ) 
     {
         
-		ballscrewSTL(color, travelY);
+		ballscrew(colorScheme, travelY);
 		translate(v = [0, 0, yPos]) 
 		{
 			ballnutSTL();
@@ -56,13 +57,12 @@ module yLinearMotion(color)
 
 
 
-module yAxis(color)
+module yAxis()
 {
-	
     baseFrame();   
         
     CWx()
     {
-		yLinearMotion(color);
+		yLinearMotion(getColorScheme("yAxis"));
 	}
 }

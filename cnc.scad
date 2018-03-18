@@ -40,10 +40,8 @@ yPos = yPosPercent * travelY / 100;
 zPos = zPosPercent * travelZ / 100;
 
 
-
-
 include <Utility.scad>
-
+include <ColorSchemes.scad>
 include <SteelFrame.scad>
 include <Fasteners.scad>
 include <LinearActuators.scad>
@@ -66,7 +64,7 @@ include <EndEffector.scad>
 // https://github.com/jreinhardt/local-scad
 // https://github.com/FreeCAD/FreeCAD-library/tree/master/Mechanical%20Parts/Bearings/linear_bearings
 
-yAxis("green");
-xAxis("red");
-zAxis("navy");
+yAxis();
+xAxis();
+zAxis();
 

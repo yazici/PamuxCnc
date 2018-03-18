@@ -11,9 +11,8 @@ module shaftCouplerSTL()
 	import("STL/shaftCoupler.stl");
 }
 
-module ballscrewSTL(color, length)
+module ballscrewSTL(length)
 {
-color(color)
 	CWy()
 		translate(v = [0, -35, -22] ) 
 			resize([length,0,0], auto=[true,false,false]) 
@@ -42,8 +41,13 @@ module floatingBallscrewSupportSTL(length)
 
 module fixedBallscrewSupportSTL()
 {
+
 	import("STL/fixedBallscrewSupport.stl");
 }
+
+
+
+
 
 module rackAndPinion()
 {
@@ -104,14 +108,24 @@ module threads()
 	}
 }
 
-module ballscrew(length)
+module ballscrew(colorScheme, length)
 {
-    color(Stainless)
-    {
-		cylinder(d=ballScrewDiameter,h=length);
-		*translate([0,0,1])     
-			threads();
- 
-    }
+	
+    Color(colorScheme, "ballscrew")
+		ballscrewSTL(length);
+}
+
+
+module floatingBallscrewSupport(colorScheme, length)
+{
+	Color(colorScheme, "endSupport")
+	floatingBallscrewSupportSTL(length);
+}
+
+
+module fixedBallscrewSupport(colorScheme)
+{
+Color(colorScheme, "endSupport")
+	fixedBallscrewSupportSTL();
 }
 
