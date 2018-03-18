@@ -110,7 +110,7 @@ module supportedShaft(colorScheme, length, pos)
 		Color (colorScheme, "linearBearing")
 			openLinearBearing();
 		
-		mountingPlate(colorScheme, pos);
+		mountingPlate(colorScheme, pos);	
 	}
 	
 }

@@ -61,6 +61,7 @@ module xLinearMotion(colorScheme)
 
 module xAxis()
 {
+	colorScheme = getColorScheme("xAxis");
     gantryFrame();
     
     translate(v = gantryFrameOrigin+[0, -steelTubeSizeNarrow/2, gantryFrameHeight + steelTubeSizeWide/2] ) 
@@ -68,9 +69,13 @@ module xAxis()
 		
 		CWx()
 			CCWy()
-				xLinearMotion(getColorScheme("xAxis"));
-            
+				xLinearMotion(colorScheme);
     }
+	
+	CCWz()
+	translate(v = [yPos/2,0,steelTubeSizeWide])
+		   resize([yPos,0,0], auto=[true,true,true]) 		
+			cableChain(colorScheme); 
 	
 	
 }

@@ -51,11 +51,15 @@ module zLinearMotion(colorScheme)
 
 module zAxis()
 {
+	colorScheme = getColorScheme("zAxis");
     motorFrame();
     translate(v = motorFrameOrigin ) 
     {
-		zLinearMotion(getColorScheme("zAxis"));
+		zLinearMotion(colorScheme);
 	
+		translate(v = [-xPos/2,steelTubeSizeNarrow,0])
+		   resize([xPos,0,0], auto=[true,true,true]) 		
+			cableChain(colorScheme); 
     }
 }
 

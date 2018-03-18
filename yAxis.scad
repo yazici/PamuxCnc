@@ -59,10 +59,11 @@ module yLinearMotion(colorScheme)
 
 module yAxis()
 {
+	colorScheme = getColorScheme("yAxis");
     baseFrame();   
         
     CWx()
     {
-		yLinearMotion(getColorScheme("yAxis"));
+		yLinearMotion(colorScheme);
 	}
 }

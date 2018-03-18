@@ -2,9 +2,9 @@
 
 
 colorSchemes = [
-	[ "xAxis",  [ ["shaft" , Stainless], 	["ballscrew" , "Red"], 		["linearBearing" , Aluminum], 		["endSupport" , "DarkSlateGray"], 		["mountingPlate" , "DimGray"] ]], 
-	[ "yAxis",  [ ["shaft" , Stainless], 	["ballscrew" , "Green"], 	["linearBearing" , Aluminum], 		["endSupport" , "DarkSlateGray"], 		["mountingPlate" , "DimGray"] ]], 
-	[ "zAxis",  [ ["shaft" , Stainless], 	["ballscrew" , "Navy"], 	["linearBearing" , Aluminum], 		["endSupport" , "DarkSlateGray"], 		["mountingPlate" , "DimGray"] ]]
+	[ "xAxis",  [ ["shaft" , Stainless], 	["ballscrew" , "Red"], 		["linearBearing" , Aluminum], 		["endSupport" , "DarkSlateGray"], 		["mountingPlate" , "DimGray"], 		["cableChain" , "Black"] ]], 
+	[ "yAxis",  [ ["shaft" , Stainless], 	["ballscrew" , "Green"], 	["linearBearing" , Aluminum], 		["endSupport" , "DarkSlateGray"], 		["mountingPlate" , "DimGray"], 		["cableChain" , "Black"] ]], 
+	[ "zAxis",  [ ["shaft" , Stainless], 	["ballscrew" , "Navy"], 	["linearBearing" , Aluminum], 		["endSupport" , "DarkSlateGray"], 		["mountingPlate" , "DimGray"], 		["cableChain" , "Black"] ]]
 ];
 		 
 function getColorScheme(colorSchemeName)  = colorSchemes[search([str(colorSchemeName)], colorSchemes)[0]][1];
