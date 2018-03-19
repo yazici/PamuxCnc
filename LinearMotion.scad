@@ -7,12 +7,30 @@ shaftSupportWidth = 30;
 
 shaftHeight = shaftDiameter + shaftSupportHeight;
 
-openLinearBearingWidth  = 40;
+openLinearBearingWidth  = 48;
 openLinearBearingLength = 50;
 openLinearBearingHeight = 20;
 openLinearBearingGap = 100;
 
+openLinearBearingOutsideGap = openLinearBearingLength*2 + openLinearBearingGap;
+
+
 ballScrewDiameter = 20;
+
+nutHousingWidth =  62;
+nutHousingHeight =  44;
+nutHousingCenterToTop =  22;
+
+
+
+ballscrewCenterHeight = 25;
+ballscrewFixedSideShaftLength = 40;
+ballscrewFloatingSideShaftLength = 5;
+
+ballscrewAssemblyHeight = ballscrewCenterHeight;
+
+function ballscrewThreadedLength(length) = length-ballscrewFixedSideShaftLength-ballscrewFloatingSideShaftLength;
+
 
 /*
 
@@ -87,14 +105,29 @@ module shaftSupport(length)
     }
 }
 
+module mountingPlateRaw(pos)
+{
+	translate(v = [0, pos -openLinearBearingOutsideGap/2, 0] ) 
+		rectangularPrism(openLinearBearingWidth, openLinearBearingOutsideGap, mountingPlateThickness);
+}
 
 module mountingPlate(colorScheme, pos)
 {
 	Color(colorScheme, "mountingPlate")
-		translate(v = [-linearBearingWidth/2, -shaftBottomToLinearBearingVerticalDistance, pos -openLinearBearingGap/2] ) 
+		translate(v = [-openLinearBearingWidth/2, -shaftBottomToLinearBearingTopDistance, 0] ) 
 			CCWx()
-				rectangularPrism(linearBearingWidth, linearBearingWidth + openLinearBearingGap, linearBearingPlateThickness);
+				mountingPlateRaw(pos);
 }
+
+module endToEndMountingPlate(colorScheme, elevation, width, length, offset, pos)
+{
+
+	Color(colorScheme, "mountingPlate")
+		translate(v = [-offset, -elevation, pos - width/2] )
+				rectangularPrism(length + offset*2, width, mountingPlateThickness);
+}
+
+
 
 module supportedShaft(colorScheme, length, pos)
 {
@@ -102,7 +135,7 @@ module supportedShaft(colorScheme, length, pos)
 		Color (colorScheme, "shaft") 
 			sbr20(length);
 		
-		translate(v = [0, -shaftSupportHeight, pos - openLinearBearingGap/2] ) 
+		translate(v = [0, -shaftSupportHeight, pos - (openLinearBearingGap/2 + openLinearBearingLength)] ) 
 		Color (colorScheme, "linearBearing") 
 			openLinearBearing();
 			
@@ -110,7 +143,7 @@ module supportedShaft(colorScheme, length, pos)
 		Color (colorScheme, "linearBearing")
 			openLinearBearing();
 		
-		mountingPlate(colorScheme, pos);	
+		//mountingPlate(colorScheme, pos);	
 	}
 	
 }
@@ -118,3 +151,113 @@ module supportedShaft(colorScheme, length, pos)
 
 
 
+include <MCAD\motors.scad>
+include <MCAD\materials.scad>
+
+E=0.001;
+
+ballScrewDiameter = 20;
+ballscrewFixedSideShaftLength = 40;
+ballscrewFloatingSideShaftLength = 5;
+
+function ballscrewThreadedLength(length) = length-ballscrewFixedSideShaftLength-ballscrewFloatingSideShaftLength;
+
+module shaftCouplerSTL()
+{	
+	import("STL/shaftCoupler.stl");
+}
+
+module shaftCoupler(colorScheme)
+{
+	Color(colorScheme, "shaftCoupler")
+		shaftCouplerSTL();
+}
+
+
+module ballscrewSTL()
+{
+	import("STL/ballscrew.stl");
+}
+
+module ballnutSTL()
+{
+	import("STL/ballnut.stl");
+}
+
+
+module ballnutHousingSTL()
+{
+	import("STL/ballnutHousing.stl");
+}
+
+
+module floatingBallscrewSupportSTL(length)
+{
+	
+	translate(v = [0, 0, length] ) 
+		import("STL/floatingBallscrewSupport.stl");
+}
+
+
+module fixedBallscrewSupportSTL()
+{
+	import("STL/fixedBallscrewSupport.stl");
+}
+
+
+
+
+
+module rackAndPinion()
+{
+}
+
+module chainAndSprocket()
+{
+}
+
+module beltDrive()
+{
+}
+
+module ballscrew(colorScheme, length)
+{
+    Color(colorScheme, "ballscrew")
+		resize([0,0,length], auto=[false, false, true]) 
+			ballscrewSTL();
+}
+
+
+module floatingBallscrewSupport(colorScheme, length)
+{
+	Color(colorScheme, "endSupport")
+		floatingBallscrewSupportSTL(length);
+}
+
+
+module fixedBallscrewSupport(colorScheme)
+{
+	Color(colorScheme, "endSupport")
+		fixedBallscrewSupportSTL();
+}
+
+module ballscrewAssembly(colorScheme, length, nutPosition)
+{	
+	fixedBallscrewSupport(colorScheme);
+	
+	translate(v = [0, 0, -ballscrewFixedSideShaftLength])
+	{
+		ballscrew(colorScheme, length);
+		shaftCoupler(colorScheme);
+		translate(v = [0, 0, -ballscrewFixedSideShaftLength/2])
+			stepper_motor_mount(23);
+	}
+
+	floatingBallscrewSupport(colorScheme, length-ballscrewFixedSideShaftLength-ballscrewFloatingSideShaftLength);
+	
+	translate(v = [0, 0, nutPosition]) 
+	{
+		ballnutSTL();
+		ballnutHousingSTL();
+	}
+}

@@ -46,7 +46,7 @@ module miterCutTriangle(tubeFaceWidth, tubeDepth, height)
 
 module rectangularPrism(width, length, height)
 {
-    hull()
+    CWx() hull()
     {
 	
 		cylinder(r = EPSILON, h = height);
@@ -121,7 +121,7 @@ module bottomMiterCut(tubeFaceWidth, tubeDepth)
 
   translate(v=[0,tubeDepth,0]) 
   {
-    CCWx()
+    CWx()
     {
 
       miterCutTriangle(tubeFaceWidth, tubeFaceWidth, height = tubeDepth);
@@ -133,7 +133,7 @@ module topMiterCut(tubeFaceWidth, tubeDepth, length)
 {
   translate(v=[0,0,length]) 
   {
-    CWx()
+    CCWx()
     {
       miterCutTriangle(tubeFaceWidth, tubeFaceWidth, height = tubeDepth);
     }
@@ -156,10 +156,9 @@ module miteredRoundedSquareTube(tubeFaceWidth, tubeDepth, length, cornerRadius, 
 
 module frameBottomTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth)
 { 
-    translate(v=[0, tubeFaceWidth, tubeDepth])
+    translate(v=[0, 0, tubeFaceWidth])
 	{
-        CWx() 
-			CCWy()		
+        CWy()
 				miteredRoundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeX, steelTubeCornerRadius, steelTubeWallThickness); 
         
     }
@@ -167,10 +166,10 @@ module frameBottomTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth)
 
 module frameTopTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth)
 { 
-    translate(v=[0, frameSizeY-tubeFaceWidth, 0])
+    translate(v=[0, tubeDepth, frameSizeY-tubeFaceWidth])
 	{
-		CCWx() 
-			CCWy()
+		FLIPx()
+			CWy()
 				miteredRoundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeX, steelTubeCornerRadius, steelTubeWallThickness); 
     }
 }
@@ -178,20 +177,18 @@ module frameTopTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth)
 
 module frameLeftTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth) 
 {
-    translate(v=[tubeFaceWidth, 0, 0])
+    translate(v=[tubeFaceWidth, 0, frameSizeY])
     {
         FLIPy()
-			CWx()
-				miteredRoundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeY, steelTubeCornerRadius, steelTubeWallThickness); 
+			miteredRoundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeY, steelTubeCornerRadius, steelTubeWallThickness); 
             
     }
 }
 module frameRightTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth) 
 { 
-    translate(v=[frameSizeX-tubeFaceWidth, 0, tubeDepth])
+    translate(v=[frameSizeX-tubeFaceWidth, 0, 0])
     {
-        CWx()
-            miteredRoundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeY, steelTubeCornerRadius, steelTubeWallThickness); 
+		miteredRoundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeY, steelTubeCornerRadius, steelTubeWallThickness); 
        
     }
 }
@@ -203,15 +200,14 @@ module steelFrame(frameSizeX, frameSizeY, whichFaceUp) {
 
 	tubeFaceWidth = steelTubeFaceWidth(whichFaceUp);
 	tubeDepth = steelTubeDepth(whichFaceUp);
+	
     union() {
-        frameLeftTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth);
-        
+        frameLeftTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth);        
         frameRightTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth);
     }
 
     union() {
-        frameBottomTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth);
-        
+        frameBottomTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth);        
         frameTopTube(frameSizeX, frameSizeY, tubeFaceWidth, tubeDepth);
     }
 }
@@ -221,13 +217,23 @@ module horizontalBeam(frameSizeX, whichFaceUp, yPosition)
 	tubeFaceWidth = steelTubeFaceWidth(whichFaceUp);
 	tubeDepth = steelTubeDepth(whichFaceUp);
 	
-	translate(v = [tubeFaceWidth,
-					yPosition,
-					0]) 
+	translate(v = [yPosition, 0, tubeFaceWidth]) 
 	{
-		CCWy()
-			CCWz()
-				roundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeX - tubeFaceWidth*2, steelTubeCornerRadius, steelTubeWallThickness);
+		//CWy()
+			roundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeX - tubeFaceWidth*2, steelTubeCornerRadius, steelTubeWallThickness);
+    }
+}
+
+
+module verticalBeam(frameSizeY, whichFaceUp, xPosition)
+{
+	tubeFaceWidth = steelTubeFaceWidth(whichFaceUp);
+	tubeDepth = steelTubeDepth(whichFaceUp);
+	
+	translate(v = [xPosition, 0, tubeFaceWidth ]) 
+	{
+		//CWy()
+			roundedSquareTube(tubeFaceWidth, tubeDepth, frameSizeY - tubeFaceWidth*2, steelTubeCornerRadius, steelTubeWallThickness);
     }
 }
 
