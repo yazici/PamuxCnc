@@ -1,0 +1,110 @@
+Y-Axis
+	Frame
+		2" Steel tubing base (1500mm x 1500mm, 6 x 1500mm)
+		
+	Linear Motion
+		2x Limit Switches
+		1x Cable Chain (2000mm)
+		2x NEMA34 Stepper
+		2x NEMA34 VibrationDamper
+		2x NEMA34 Mount
+		2x Shaft Coupler
+		2x BF15
+		2x BF15 Retainer
+		2x BK15
+		2x BK15 Nut
+		2x Ballnut
+		2x Ballnut Bracket
+		2x SBR20 1300mm Shaft
+		4x SBR20UU Linear Bearing
+		
+	Mounting Plate
+		1x Mounting plate (150mm x 1500mm)
+
+	Fasteners
+		Welded frame
+		
+X-Axis
+	Frame
+		2" Steel tubing base (300mm x 1500mm, 2 x 300mm, 3 x 1500mm)
+		
+	Linear Motion
+		2x Limit Switches
+		1x Cable Chain (2000mm)
+		1x NEMA34 Stepper
+		1x NEMA34 VibrationDamper
+		1x NEMA34 Mount
+		1x Shaft Coupler
+		1x BF15
+		1x BF15 Retainer
+		1x BK15
+		1x BK15 Nut
+		1x Ballnut
+		1x Ballnut Bracket
+		2x SBR20 1300mm Shaft
+		4x SBR20UU Linear Bearing
+		
+	Mounting Plate
+		1x Mounting plate (150mm x 300mm, L-Shape)
+
+Z-Axis
+	Linear Motion
+		2x Limit Switches
+		1x NEMA23 Stepper
+		1x NEMA23 VibrationDamper
+		1x NEMA23 Mount
+		1x Shaft Coupler
+		1x BF15
+		1x BF15 Retainer
+		1x BK15
+		1x BK15 Nut
+		1x Ballnut
+		1x Ballnut Bracket
+		2x SBR20 300mm Shaft
+		4x SBR20UU Linear Bearing
+		
+	Mounting Plate
+		1x Mounting plate (150mm x 300mm)
+		1x Spindle Mount
+		1x Spindle
+	
+Electronics
+	4x S350W60V Power Supply for Motors
+	4x DM860T Motor Drivers
+	1x Arduino w/ GRBL
+	1x Raspberry Pi w/ Touch Screen, Wifi, Keyboard, Mouse, SDCard
+	4x Cooling Fan for Motors
+	1x PC PowerSupply for Arduino, Raspberry, Fans, etc.
+	1x 2.2 kW VFD
+	1x 2.2 kW Water/Air Cooled Spindle 
+	1x Z-Probe
+	2x E-Stop
+	1x On-Off
+	4x AWG 18/4 Cables for steppers
+	4x Aviation Connectors 4 pin for steppers, 2 pin for limit switch, 1 pin for GND
+	1x Enclosure
+	1x AC Power Cable (PC Power Cable)
+	
+	
+Documentation -online, sdcard, hard copy, always with machine, some laminated-
+	Safety Procedures, Warning Labels
+	
+	Quick Start -simple procedures that can start cutting a piece even if forgotten everything and come back 5 years later-
+	
+	Software and Workflow Overview
+	Tooling (bits, mills, wrenches to change mills, etc.)	
+	
+	User Manual
+	
+	GCode Reference
+	
+	Machining References
+	
+	Parameters
+	Parts List
+	CAD Drawings
+	Troubleshooting & Maintenance
+	Maintenance Tooling
+	References for Parts Used 
+	Spare Parts
+	Upgrades (done and planned)
