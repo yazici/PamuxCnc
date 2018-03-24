@@ -1,0 +1,210 @@
+FrameMember.Material = Steel
+FrameMember.SizeNarrow = 2in
+FrameMember.SizeWide = 4in
+FrameMember.WallThickness = 0.12in
+FrameMember.CornerRadius = 0.25in
+
+//http://www.machinedesign.com/linear-motion/fundamentals-ball-screws
+X.BallScrew.Length = 1300mm
+Y.BallScrew.Length = 1300mm
+Z.BallScrew.Length = 300mm
+
+X.BallScrew = RM2005
+Y.BallScrew = RM2005
+Z.BallScrew = RM2005
+
+X.Shaft = SBR20
+Y.Shaft = SBR20
+Z.Shaft = SBR20
+
+X.Stepper = 34HS59-5004S
+Y.Stepper = 34HS59-5004S
+Z.Stepper = 23HS45-4204D ???
+
+X.Stepper.FrameSize = NEMA34
+Y.Stepper.FrameSize = NEMA34
+Z.Stepper.FrameSize = NEMA23
+
+X.Stepper.Length = 150mm
+Y.Stepper.Length = 150mm
+Z.Stepper.Length = 113mm
+
+
+//www.numberfactory.com/NEMA%20Motor%20Dimensions.htm
+NEMA23.A = 56.4mm //Side Length
+NEMA23.B = 47.1mm //Distance Between Mounting Holes
+NEMA23.C = 5.5mm // Mounting Hole Diameter
+NEMA23.D = 6.35mm //Shaft Diameter (.25)
+NEMA23.ShaftLength = 21mm
+NEMA23.ShaftDCutLength= 15mm
+
+NEMA34.A = 86mm //Side Length
+NEMA34.B = 69.6mm //Distance Between Mounting Holes
+NEMA34.C = 5.5mm // Mounting Hole Diameter
+NEMA34.D = 14mm //Shaft Diameter (.375)
+NEMA34.ShaftLength = 21mm ??
+NEMA34.ShaftDCutLength= 15mm ??
+
+X.Stepper.Torque = 13.0Nm (1841oz.in)
+Y.Stepper.Torque = Dual, 13.0Nm (1841oz.in)
+Z.Stepper.Torque = 3.0Nm (425oz.in)
+ 
+Stepper.Driver = DM860T
+Stepper.PowerSupply = S350W60V
+Stepper.Cooling = BLDCFan
+Stepper.Connector = P20-5 Aviation Plug
+Stepper.Cable = AWG18
+Stepper.VibrationDamper = YES ??
+
+X.ActuationType = SingeScrewInTheMiddle
+Y.ActuationType = MasterSlaveDualScrews
+Z.ActuationType = SingeScrewInTheMiddle
+
+X.MountingPlate.Thickness = 0.25in
+Y.MountingPlate.Thickness = 0.25in
+Z.MountingPlate.Thickness = 0.25in
+
+Control.Panel = Raspberry Pi w/ Touch Screen 
+Control.EmergencyStop = BigRedButton
+Control.MCU = Arduino 
+Control.Firmware = Grbl
+Control.ProxyimitySensor = LimitSwitch
+Control.PowerSupply = PC PSU
+Control.OnOff = Toggle Switch With 110AC Input Jack
+Control.Enclosure = PC Enclosure
+Control.HomingProbe = ???
+
+Spindle.Driver = VFD
+Spindle.Power = 2kW
+Spindle.RPM = 18000
+Spindle.Height = 180mm
+Spindle.Diameter = 80mm
+Spindle.Mount.Thickness = 10mm
+Spindle.Mount.Height = 78mm
+Spindle.Mount.Width = 148mm
+
+X.DemoPosPercent = 30
+Y.DemoPosPercent = 30
+Z.DemoPosPercent = 30
+
+RM2005.Notes = Makes sure assembled correctly, include nuts, bushings, and retaining rings into BF15 and BK15
+RM2005.Diameter = 20mm
+RM2005.CouplingSectionDiameter = 12mm (c0.5)
+RM2005.CouplingSectionLength = 20mm
+RM2005.CouplerToNema23 = LoveJoy 12mm to .250"  
+RM2005.CouplerToNema34 = LoveJoy HighTorqueRating 12mm to .375" 
+RM2005.ThreadedSection = M15x1
+RM2005.ThreadedSectionLength = 14mm
+RM2005.FixedSupportSectionDiameter = 15mm
+RM2005.FixedSupportSectionLength = 40mm // Includes Threaded Section
+RM2005.FixedEndSupport = BK15
+RM2005.FloatingSupportSectionDiameter = 15mm
+RM2005.FloatingSupportSectionLength = 13mm
+RM2005.FloatingEndSupport = BF15
+RM2005.Ballnut = RM2005N
+
+RM2005N.Type = Flange
+RM2005N.BallnutBracket = DGS20
+
+DGS20.W = 60mm
+DGS20.L = 40mm
+DGS20.H = 43mm
+DGS20.ID = 36mm
+
+SBR20.Diameter = 20mm
+SBR20.MountingHoleDiameter = 5.5mm
+SBR20.LinearBearing = SBR20S
+
+
+SBR20S.W = 48mm // Front, Width
+SBR20S.G = 39mm // Front, Height
+SBR20S.A = 11mm // Front, Bearing Corner Extrusion Width
+SBR20S.B = 45mm // Front, Shaft Support Base Width
+SBR20S.T = 5mm // Front, Shaft Support (SBR20) Base, Thickness L1
+SBR20S.M = 50mm // Side, Length
+SBR20S.S3 = M6x20 // Front, Shaft Support Base to Shaft Mounting Screws Size
+SBR20S.J = 35mm // Front, Distance Between Bearing Mounting Hole Centers along the width
+SBR20S.K = 35mm // Side, Distance Between Bearing Mounting Hole Centers along the length
+SBR20S.S2 = 5.5mm // Front, Shaft Support Base, Mounting Hole Diameter
+SBR20S.C = 30mm // Front, Shaft Support (SBR20) Base, Distance Between Mounting Hole Centers along the Width
+SBR20S.S1 = M6 // Front, Bearing Mounting Screws (4) Size
+SBR20S.P = 150mm // Side, Shaft Support Base, Distance Between Mounting Hole Centers along the Length
+
+S350W60V.W = 115mm
+S350W60V.L = 215mm
+S350W60V.H = 50mm
+S350W60V.Power = 350W
+S350W60V.OutputVoltage = 60V DC
+S350W60V.Current = 5.9A
+S350W60V.Weight = 1.1kg
+
+DM860T.Notes = Side Mount For Better Heat Dissipation, Has fan on it
+DM860T.W = 97mm
+DM860T.L = 151mm
+DM860T.H = 57mm
+DM860T.MountingHoleDiameter = 3.5mm
+DM860T.DistanceBetweenMountingHolesAlongTheLength = 112mm
+DM860T.DistanceBetweenMountingHolesAlongTheWidth = 49.2mm
+DM860T.BottomToMountingHoleDistance = 22.5mm  // Excluding fan
+DM860T.PeakCurrent = 7.2A
+DM860T.InputVoltage = 60V
+DM860T.PulseFrequency = 200kHz
+DM860T.Weight = 580g (20.5oz)
+
+AWG18.Info = Silicone Sheating, Stranded
+AWG18.OD = 1.024mm 
+AWG18.Ampacity = 10A@60C, 14A@75C, 16A@90C
+
+X.TableSize = X.BallScrew.Length + 200mm
+Y.TableSize = Y.BallScrew.Length + 200mm
+
+X.CableChain.Length = X.TableSize
+Y.CableChain.Length = Y.TableSize
+
+X.Shaft.Length = X.BallScrew.Length
+Y.Shaft.Length = Y.BallScrew.Length
+Z.Shaft.Length = Z.BallScrew.Length
+
+// http://www.thk.com/?q=us/node/5212
+
+CountOf.Axes = 3
+
+CountOf.Motors.Nema23 = 1
+CountOf.Motors.Nema34 = 3
+
+CountOf.Motors = CountOf.Motors.Nema23 + CountOf.Motors.Nema34
+CountOf.BallScrews = CountOf.Motors
+CountOf.Ballnuts = CountOf.BallScrews
+CountOf.BallnutHousings = CountOf.Ballnuts
+CountOf.FixedEndSupports = CountOf.BallScrews
+CountOf.FloatingEndSupports = CountOf.BallScrews
+
+CountOf.Shafts = CountOf.Axes  * 2
+
+CountOf.LinearBearings.PerShaft = 2
+CountOf.LinearBearings = CountOf.LinearBearing.PerShaft * CountOf.Shafts
+
+CountOf.Fasteners.ShaftToFrame.PerShaft = 2 * ( 1 + (Shaft.Length / Shaft.LinearBearing.P))
+CountOf.Fasteners.ShaftToFrame.PerAxis = 2 * CountOf.Fasteners.ShaftToFrame.PerShaft
+
+CountOf.Fasteners.MountingPlateToLinearBearing.PerBearing = 4
+CountOf.Fasteners.MountingPlateToLinearBearing.PerAxis = 4 * CountOf.Fasteners.MountingPlateToLinearBearing.PerBearing
+
+CountOf.Fasteners.MotorMountToMotor.Nema23.PerMotor = 4
+CountOf.Fasteners.MotorMountToFrame.Nema23.PerMotor = 4
+CountOf.Fasteners.Total.Nema23.PerMotor = CountOf.Fasteners.MotorMountToMotor.Nema23.PerMotor + CountOf.Fasteners.MotorMountToFrame.Nema23.PerMotor
+CountOf.Fasteners.Motor.Nema23 = CountOf.Fasteners.Total.Nema23.PerMotor * CountOf.Motors.Nema23
+
+CountOf.Fasteners.MotorMountToMotor.Nema34.PerMotor = 4
+CountOf.Fasteners.MotorMountToFrame.Nema34.PerMotor = 4
+CountOf.Fasteners.Total.Nema34.PerMotor = CountOf.Fasteners.MotorMountToMotor.Nema34.PerMotor + CountOf.Fasteners.MotorMountToFrame.Nema34.PerMotor
+CountOf.Fasteners.Motor.Nema34 = CountOf.Fasteners.Total.Nema34.PerMotor * CountOf.Motors.Nema34
+
+CountOf.Fasteners.BallnutToBallnutHousing.PerHousing = 6
+CountOf.Fasteners.BallnutToBallnutHousing = CountOf.BallnutHousings * CountOf.Fasteners.BallnutToBallnutHousing.PerHousing
+
+CountOf.Fasteners.FixedEndSupports.PerSupport = 4
+CountOf.Fasteners.FixedEndSupports = CountOf.FixedEndSupports * CountOf.Fasteners.FixedEndSupports.PerSupport
+
+CountOf.Fasteners.FloatingEndSupports.PerSupport = 4
+CountOf.Fasteners.FloatingEndSupports = CountOf.FloatingEndSupports * CountOf.Fasteners.FloatingEndSupports.PerSupport
